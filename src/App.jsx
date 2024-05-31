@@ -158,30 +158,72 @@
 // export default App;
 
 
-import React from 'react';
+// import React from 'react';
+
+// function App() {
+//   return (
+//     <>
+//       <Wrapper innerComponent={<TextContent />} />
+//     </>
+//   );
+// }
+
+// function TextContent() {
+//   return (
+//     <div>
+//       <h1>Hello World Soumik was here!</h1>
+//     </div>
+//   );
+// }
+
+// function Wrapper({ innerComponent }) {
+//   return (
+//     <div style={{ border: '2px solid black' }}>
+//       {innerComponent}
+//     </div>
+//   );
+// }
+
+// export default App;
+
+import React, { memo, useMemo, useState } from 'react';
 
 function App() {
+  const [number, setNumber] = useState(1);
+  const [count, setCount] = useState(0);
+
+  const sumResult = useMemo(() => sum(number), [number]);
+
+  let clickMe=()=>{
+    setCount(count + 1);
+  }
   return (
     <>
-      <Wrapper innerComponent={<TextContent />} />
+      <input 
+        type="text" 
+        name="number" 
+        placeholder="Enter a number"
+        onChange={(e) => setNumber(Number(e.target.value) || 0)}
+      />
+      <h1>The sum of 0 to {number} is {sumResult}</h1>
+       <button type="submit" onClick={() => clickMe()}>
+        You Clicked Me {count} times
+      </button>
     </>
   );
-}
 
-function TextContent() {
-  return (
-    <div>
-      <h1>Hello World Soumik was here!</h1>
-    </div>
-  );
-}
+  function sum(n) {
+    n = Math.floor(n); // Ensure n is an integer
+    if (n < 1) return 0; // Handle negative numbers and zero
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+      sum += i;
+    }
+    console.log(`Memo got called`)
+    return sum;
+  }
 
-function Wrapper({ innerComponent }) {
-  return (
-    <div style={{ border: '2px solid black' }}>
-      {innerComponent}
-    </div>
-  );
 }
 
 export default App;
+
